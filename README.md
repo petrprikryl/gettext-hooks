@@ -31,3 +31,13 @@
 * `untranslated-messages`, `fuzzy-messages` - hooks of
   [pre-commit-po-hooks](https://github.com/mondeja/pre-commit-po-hooks) (BSD-3-Clause), installed as a dependency,
   so a project needs this repository only
+
+## Development
+
+```shell
+uv run pytest
+```
+
+Integration tests run `makemessages` with the system GNU gettext. Set `GETTEXT_HOOKS_ARCHIVE_URL` to the tag archive
+(or a `file://` copy made by `git archive --prefix=gettext-0.0.3/ ... 0.0.3`) to run them with the pinned tools and
+to check the pinned SHA-256 against the real binaries.

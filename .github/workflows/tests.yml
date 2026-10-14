@@ -1,0 +1,29 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        gettext: [system, pinned]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: sudo apt-get update && sudo apt-get install -y gettext
+      - name: pytest
+        env:
+          # `pinned` downloads the tools from the petrprikryl/gettext tag and checks their SHA-256
+          GETTEXT_HOOKS_ARCHIVE_URL: ${{ matrix.gettext == 'pinned' && 'https://github.com/petrprikryl/gettext/archive/refs/tags/0.0.3.tar.gz' || '' }}
+        run: uv run pytest -v
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uvx ruff check
+      - run: uvx ruff format --check
