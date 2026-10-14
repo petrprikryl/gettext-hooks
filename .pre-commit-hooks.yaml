@@ -1,0 +1,22 @@
+- id: django-makemessages
+  name: django-makemessages
+  description: Updates versioned Django catalogs (`<app>/locale/<lang>/LC_MESSAGES/*.po`) from the code with pinned GNU gettext
+  entry: django-makemessages-hook
+  language: python
+  pass_filenames: false
+  files: \.(py|html|txt|js|po)$
+
+# hooks of pre-commit-po-hooks, so projects need this repository only
+- id: untranslated-messages
+  name: untranslated-messages
+  description: Checks for untranslated messages in PO files
+  entry: untranslated-messages-hook
+  language: python
+  files: \.po$
+
+- id: fuzzy-messages
+  name: fuzzy-messages
+  description: Checks for fuzzy messages in PO files
+  entry: fuzzy-messages-hook
+  language: python
+  files: \.po$

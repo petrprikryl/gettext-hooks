@@ -1,0 +1,22 @@
+[project]
+name = "gettext-hooks"
+version = "1.0.0"
+description = "pre-commit hooks keeping Django translation catalogs in sync with the code, with pinned GNU gettext"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    # makemessages output (templatize, xgettext options) may change between Django releases
+    "django~=6.1.0",
+    # fork with the Python 3.14 fix, back to `pre-commit-po-hooks` on PyPI after https://github.com/mondeja/pre-commit-po-hooks/pull/27
+    "pre-commit-po-hooks @ git+https://github.com/mounirmesselmeni/pre-commit-po-hooks@d38e8b19ef6d3fc2fed25ea9e6492c48241b19a8",
+]
+
+[project.scripts]
+django-makemessages-hook = "gettext_hooks.makemessages:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14"]
+build-backend = "uv_build"
+
+[tool.ruff]
+line-length = 110
